@@ -71,7 +71,7 @@
             <option value="INR">INR</option>
             <!-- Add more options as needed -->
         </select>
-        <input type="text" id="conamt" placeholder="Converted Amount" value="1" readonly>
+        <input type="text" id="conamt" placeholder="Converted Amount" value="1">
         <br>
     </div>
 
@@ -79,25 +79,8 @@
         let rate = 1;
         let fromCurrency = document.querySelector('#fromCurr');
         let toCurrency = document.querySelector('#toCurr');
-                
-        fromCurrency.addEventListener('change', function() {
-            let fromCurr = fromCurrency.value;
-            let toCurr = toCurrency.value;
-            let url = `https://api.exchangerate-api.com/v4/latest/${fromCurr}`;
-            fetch(url)
-            .then((response) => {
-                return response.json();
-            })
-            .then(data => {
-                rate = data.rates[toCurr];
-                let amt = parseFloat(document.querySelector('#amt').value);
-                let convertedAmt = amt * rate;
-                let conamt = document.querySelector('#conamt');
-                conamt.value = convertedAmt.toFixed(2);
-            })
-        });
 
-        toCurrency.addEventListener('change', function() {
+        fromCurrency.addEventListener('change', function() {
             let fromCurr = fromCurrency.value;
             let toCurr = toCurrency.value;
             let url = `https://api.exchangerate-api.com/v4/latest/${fromCurr}`;
@@ -113,6 +96,56 @@
                 conamt.value = convertedAmt;
             })
         });
+
+        toCurrency.addEventListener('change', function() {
+            let fromCurr = toCurrency.value;
+            let toCurr = fromCurrency.value;
+            let url = `https://api.exchangerate-api.com/v4/latest/${fromCurr}`;
+            fetch(url)
+            .then((response) => {
+                return response.json();
+            })
+            .then(data => {
+                rate = data.rates[toCurr];
+                let conamt = document.querySelector('#amt');
+                let amt = parseFloat(document.querySelector('#conamt').value);
+                let convertedAmt = amt * rate;
+                conamt.value = convertedAmt;
+            })
+        });
+
+
+        let amt = document.querySelector('#amt');
+        let amt2 = document.querySelector('#conamt');
+        amt.addEventListener('input',function(e){
+            let fromCurr = fromCurrency.value;
+            let toCurr = toCurrency.value;
+            let url = `https://api.exchangerate-api.com/v4/latest/${fromCurr}`;
+            fetch(url).then((response) => {
+                return response.json();
+            }).then(data => {
+                rate = data.rates[toCurr];
+                let amount = parseFloat(document.querySelector('#amt').value);
+                let convertedAmt = amount * rate;
+                let conamt = document.querySelector('#conamt');
+                conamt.value = convertedAmt;
+            })
+
+        })
+        amt2.addEventListener('input',function(e){
+            let fromCurr = toCurrency.value;
+            let toCurr = fromCurrency.value;
+            let url = `https://api.exchangerate-api.com/v4/latest/${fromCurr}`;
+            fetch(url).then((response) => {
+                return response.json();
+            }).then(data => {
+                rate = data.rates[toCurr];
+                let amount = parseFloat(document.querySelector('#conamt').value);
+                let convertedAmt = amount * rate;
+                let conamt = document.querySelector('#amt');
+                conamt.value = convertedAmt;
+            })
+        })
 
 
 
