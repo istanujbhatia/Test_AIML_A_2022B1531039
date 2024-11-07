@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+      }
+      .login-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .login-container h2 {
+        margin-bottom: 20px;
+      }
+      .login-container input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .login-container button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .login-container button:hover {
+        background-color: #0056b3;
+      }
+      #redirect {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>Login</h2>
+      <form>
+        <label for="username">
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Username"
+            required
+          />
+        </label>
+        <label for="password">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+        </label>
+        <button type="submit">Login</button>
+        <!-- <button id="btn"><a href="converter.html" id="redirect"></a></button> -->
+      </form>
+    </div>
+    <script>
+        function clickButton() {
+            document.querySelector('#btn').click();
+            console.log("clicked");
+            
+        }
+      const form = document.querySelector("form");
+      form.addEventListener("submit", (e) => {
+        const username = document.querySelector("#username").value;
+        const password = document.querySelector("#password").value;
+        if (username === "admin" && password === "admin") {
+          alert("Login successful");
+
+          setTimeout(clickButton, 1000);
+        } else {
+          alert("Login failed");
+        }
+      });
+    </script>
+  </body>
+</html>
