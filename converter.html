@@ -24,8 +24,15 @@
         h1 {
             color: #333;
         }
-        input[type="text"] {
-            width: calc(50% - 10px);
+        select{
+            width: calc(100% - 3px);
+            padding: 10px;
+            margin: 10px 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input{
+            width: calc(100% - 25px);
             padding: 10px;
             margin: 10px 5px;
             border: 1px solid #ccc;
@@ -48,34 +55,71 @@
 <body>
     <div class="container">
         <h1>Currency Converter</h1>
-        <input type="text" id="from" placeholder="From Currency (e.g., USD)">
-        <input type="text" id="amt" placeholder="Amount">
+        <select id="fromCurr">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="INR">INR</option>
+            <!-- Add more options as needed -->
+        </select>
+        <input type="text" id="amt" value="1">
         <br>
-        <input type="text" id="to" placeholder="To Currency (e.g., EUR)">
-        <input type="text" id="conamt" placeholder="Converted Amount" readonly>
+        <select id="toCurr">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="INR">INR</option>
+            <!-- Add more options as needed -->
+        </select>
+        <input type="text" id="conamt" placeholder="Converted Amount" value="1" readonly>
         <br>
-        <button>Convert</button>
     </div>
 
     <script>
         let rate = 1;
-        let btn = document.querySelector('button');
-        btn.addEventListener('click', function() {
-            let fromCurr = document.querySelector('#from').value;
-            let toCurr = document.querySelector('#to').value;
+        let fromCurrency = document.querySelector('#fromCurr');
+        let toCurrency = document.querySelector('#toCurr');
+                
+        fromCurrency.addEventListener('change', function() {
+            let fromCurr = fromCurrency.value;
+            let toCurr = toCurrency.value;
             let url = `https://api.exchangerate-api.com/v4/latest/${fromCurr}`;
             fetch(url)
             .then((response) => {
                 return response.json();
             })
             .then(data => {
-                rate = data.rates[toCurr.toUpperCase()];
+                rate = data.rates[toCurr];
                 let amt = parseFloat(document.querySelector('#amt').value);
                 let convertedAmt = amt * rate;
                 let conamt = document.querySelector('#conamt');
                 conamt.value = convertedAmt.toFixed(2);
             })
         });
+
+        toCurrency.addEventListener('change', function() {
+            let fromCurr = fromCurrency.value;
+            let toCurr = toCurrency.value;
+            let url = `https://api.exchangerate-api.com/v4/latest/${fromCurr}`;
+            fetch(url)
+            .then((response) => {
+                return response.json();
+            })
+            .then(data => {
+                rate = data.rates[toCurr];
+                let amt = parseFloat(document.querySelector('#amt').value);
+                let convertedAmt = amt * rate;
+                let conamt = document.querySelector('#conamt');
+                conamt.value = convertedAmt;
+            })
+        });
+
+
+
+
+        
+
+
     </script>
 </body>
 </html>
