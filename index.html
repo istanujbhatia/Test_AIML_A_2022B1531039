@@ -69,7 +69,6 @@
           />
         </label>
         <button type="submit">Login</button>
-        <!-- <button id="btn"><a href="converter.html" id="redirect"></a></button> -->
       </form>
     </div>
     <script>
@@ -80,12 +79,12 @@
         }
       const form = document.querySelector("form");
       form.addEventListener("submit", (e) => {
+        e.preventDefault();
         const username = document.querySelector("#username").value;
         const password = document.querySelector("#password").value;
         if (username === "admin" && password === "admin") {
           alert("Login successful");
-
-          setTimeout(clickButton, 1000);
+          window.location.href = "converter.html";
         } else {
           alert("Login failed");
         }
